@@ -10,7 +10,7 @@ function App() {
       <SideBarDrawer />
       <Routes>
         {/* <Route path="/" element={<HomePage />} /> */}
-        <Route path="/" element={<CategoryRegistration />} />
+        <Route path="/categoryRegistration" element={<CategoryRegistration />} />
       </Routes>
     </>
   )

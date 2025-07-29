@@ -1,21 +1,37 @@
 import React from 'react'
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import Button from '@mui/material/Button';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import DensityMediumIcon from '@mui/icons-material/DensityMedium';
+import IconButton from '@mui/material/IconButton';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import CategoryIcon from '@mui/icons-material/Category';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import PeopleIcon from '@mui/icons-material/People';
+import ExtensionIcon from '@mui/icons-material/Extension';
+import GppGoodIcon from '@mui/icons-material/GppGood';
+import { Link } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
+
+// Define your menu list
+const menuItems = [
+    { id: 1, menuName: 'Dashboard', path: '/inbox', icon: <DashboardIcon /> },
+    { id: 2, menuName: 'Category', path: '/categoryRegistration', icon: <CategoryIcon /> },
+    { id: 3, menuName: 'Supplier', path: '/send', icon: <EmojiPeopleIcon /> },
+    { id: 4, menuName: 'Item', path: '/drafts', icon: <ExtensionIcon /> },
+    { id: 5, menuName: 'GRN', path: '/drafts', icon: <GppGoodIcon /> },
+    { id: 6, menuName: 'User', path: '/drafts', icon: <PeopleIcon /> }
+
+];
+
 
 function SideBarDrawer() {
     const [state, setState] = React.useState({
         left: false,
-
     });
 
     const toggleDrawer = (anchor, open) => (event) => {
@@ -32,19 +48,22 @@ function SideBarDrawer() {
 
     const list = (anchor) => (
         <Box
-            sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+            sx={{
+                width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250, background: '#F0EAD6',
+                height: '100%',
+            }}
             role="presentation"
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
+                {menuItems.map((text, index) => (
+                    <ListItem key={index} disablePadding>
+                        <ListItemButton component={Link} to={text.path}>
                             <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                {text.icon}
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText primary={text.menuName} />
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -54,10 +73,12 @@ function SideBarDrawer() {
     );
 
     return (
-        <div>
-            {['Menu'].map((anchor) => (
+        <div style={{ background: '#701C1C', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            {['left'].map((anchor) => (
                 <React.Fragment key={anchor}>
-                    <DensityMediumIcon onClick={toggleDrawer(anchor, true)}>{anchor}</DensityMediumIcon>
+                    <IconButton onClick={toggleDrawer(anchor, true)}>
+                        <DensityMediumIcon sx={{ color: 'black' }} />
+                    </IconButton>
                     <SwipeableDrawer
                         anchor={anchor}
                         open={state[anchor]}
@@ -68,6 +89,8 @@ function SideBarDrawer() {
                     </SwipeableDrawer>
                 </React.Fragment>
             ))}
+            <h2>DewShe.lk</h2>
+            <LogoutIcon />
         </div>
     )
 }
